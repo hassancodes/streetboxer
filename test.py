@@ -146,6 +146,11 @@ while True:
       # playing the sound effect.
       pygame.mixer.music.load("effects/has-punch.mp3")
       pygame.mixer.music.play()
+      font = pygame.font.Font('freesansbold.ttf', 20)
+      text = font.render(f'Tanjim : {tan_health}', True, green, blue)
+      tan_health-=10;
+      textRect = text.get_rect()
+      textRect.center = (100, 20)
       # time.sleep(0.5);
       first_char=True;
 
@@ -164,10 +169,10 @@ while True:
       pygame.mixer.music.play()
       second_char=True;
     ##############  TEXT  Starts from here #######################
-    font = pygame.font.Font('freesansbold.ttf', 20)
-    text = font.render(f'Tanjim : {tan_health}', True, green, blue)
-    textRect = text.get_rect()
-    textRect.center = (100, 20)
+   #  font = pygame.font.Font('freesansbold.ttf', 20)
+   #  text = font.render(f'Tanjim : {tan_health}', True, green, blue)
+   #  textRect = text.get_rect()
+   #  textRect.center = (100, 20)
 
     text2 = font.render(f'Hassan : {has_health}', True, green, blue)
     text2Rect = text2.get_rect()
