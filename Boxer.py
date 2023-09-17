@@ -5,7 +5,6 @@ import time;
 import cv2 
 import mediapipe as mp
 
-
 tan_health = 100;
 has_health = 100;
 
@@ -44,7 +43,7 @@ second_char = True;
 # res VARS
 screen_width = 700
 screen_height = 399
-char1_x,char1_y = 300,200;
+char1_x,char1_y = 400,200;
 char2_x,char2_y = 200,200;
 
 
@@ -59,8 +58,9 @@ char_punch = pygame.image.load("char1/img-1.png")
 ################# char1 end here 
 
 char2 = pygame.image.load("char1/img-tan-1.png")
-window = pygame.display.set_mode((screen_width, screen_height))
 
+window = pygame.display.set_mode((screen_width, screen_height))
+## mediapipe
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -81,13 +81,11 @@ def distance(pointA, pointB):
     dist = dist**(0.5)
     return dist
 
-
 jab = False
 cross = False
 counter = 0
 cap = cv2.VideoCapture(0)
 
-oldp = 0
 # Start the game loop
 while cap.isOpened():
     # Handle events
@@ -118,14 +116,23 @@ while cap.isOpened():
          
          pos = abs(distance(L_shoul, R_shoul) - 50) * 5.5
 
-         
          counter= counter +1
-         if counter%30 == 0:
-            if pos > 300 and char1_x > 15:
-                char1_x -= 30
-            elif pos<300 and char1_x < 650:
+         if counter%30 == 0 and abs(char1_x-char2_x)>45:
+            if pos > 600 and pos < 700 and char1_x > 35 :
+                char1_x -= 35
+            elif pos > 500 and pos < 600 and char1_x > 25:
+                char1_x -= 25
+            elif pos > 450 and pos < 500 and char1_x > 20:
+                char1_x -= 20
+            elif pos > 350 and pos < 450 and char1_x < 650:
+                char1_x += 0
+            elif pos > 300 and pos < 350 and char1_x < 650:
+                char1_x += 25
+            elif pos > 200 and pos < 300 and char1_x < 650:
+                char1_x += 30
+            elif pos > 100 and pos < 200 and char1_x < 650:
                 char1_x += 35
-         oldp = pos
+
          # draw skeleton on the frame
          mp_drawing.draw_landmarks(frame, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
          # display the frame
