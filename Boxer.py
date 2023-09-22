@@ -12,6 +12,8 @@ has_health = 100;
 pygame.init()
 pygame.display.set_caption('GameBox')
 
+
+
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
@@ -60,6 +62,8 @@ char_punch = pygame.image.load("char1/img-1.png")
 char2 = pygame.image.load("char1/img-tan-1.png")
 
 window = pygame.display.set_mode((screen_width, screen_height))
+
+
 ## mediapipe
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -84,7 +88,8 @@ def distance(pointA, pointB):
 jab = False
 cross = False
 counter = 0
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("char1/test.mp4")
+# cap = cv2.VideoCapture(0)
 
 # Start the game loop
 while cap.isOpened():
@@ -136,12 +141,13 @@ while cap.isOpened():
          # draw skeleton on the frame
          mp_drawing.draw_landmarks(frame, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
          # display the frame
-         cv2.imshow('Output', frame)
+         cv2.imshow('RealTime', frame)
          
-    except:
-         break
+    except error as e:
+         print(e);
     if cv2.waitKey(1) == ord('q'):
-          break
+        print("Terminating the Program")
+        break
           
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -149,22 +155,22 @@ while cap.isOpened():
             sys.exit()
 
       # ################## logic for the first character ##################
-      #   if event.type == pygame.KEYDOWN:
-      #     if event.key == pygame.K_LEFT:
-      #       first_char=True;
-      #       if char1_x <15:
-      #          char1_x -=0
-      #       else:
-      #          char1_x -=15;
-      #     elif event.key == pygame.K_RIGHT:
-      #        first_char=True;
-      #        if char1_x>600:
-      #           char1_x +=0
-      #        else:
-      #           char1_x +=15;
-      #     elif event.key == pygame.K_UP:
-      #        tan_health -=0;
-      #        first_char=False;
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_LEFT:
+            first_char=True;
+            if char1_x <15:
+               char1_x -=0
+            else:
+               char1_x -=15;
+          elif event.key == pygame.K_RIGHT:
+             first_char=True;
+             if char1_x>600:
+                char1_x +=0
+             else:
+                char1_x +=15;
+          elif event.key == pygame.K_UP:
+             tan_health -=0;
+             first_char=False;
                
         
       
@@ -177,19 +183,19 @@ while cap.isOpened():
               
         
         ################# login for the second characters  ###################
-    if event.type == pygame.KEYDOWN:
-         if pygame.key.name(event.key) =="a":
-            if char2_x <15:
-               char2_x -=0
-            else:
-               char2_x -=15;
-         elif pygame.key.name(event.key) =="d":
-            if char2_x >600:
-               char2_x +=0
-            else:
-               char2_x +=15;
-         elif pygame.key.name(event.key) =="w":
-            second_char=False;
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                if char2_x <15:
+                    char2_x -=0
+                else:
+                    char2_x -=15;
+            elif pygame.key.name(event.key) =="d":
+                if char2_x >600:
+                    char2_x +=0
+                else:
+                    char2_x +=15;
+            elif pygame.key.name(event.key) =="w":
+                second_char=False;
 
     
               
@@ -232,7 +238,7 @@ while cap.isOpened():
               time.sleep(3);
               break
           tan_health-=10;
-      tan_health;
+    #   tan_health;ad
       textRect = text.get_rect();
       textRect.center = (100,20)
       # time.sleep(0.5);
