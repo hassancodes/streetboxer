@@ -11,6 +11,16 @@
 - improved gesture tracking
 - Adding more games with support of body gestures to help the community.
 
+
+## I have written all the patterns that I have used in this game
+
+### Image Loader Function
+
+- All the images are loaded inside a single function
+- these images are added to simple dictionary 
+- Later I can easily fetch these images from any where in the page.
+
+
 #### Contributors
 - Soham Nawthale
 - Muhammad Hassan

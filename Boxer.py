@@ -81,6 +81,7 @@ def distBetween(pointA, pointB, distA, distB):
 def distance(pointA, pointB):
     x = length * (pointA.x - pointB.x)
     y = height * (pointA.y - pointB.y)
+
     dist = x**2 + y**2
     dist = dist**(0.5)
     return dist
