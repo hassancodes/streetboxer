@@ -4,10 +4,19 @@ from pygame import *
 import time
 import mediapipe as mp
 import cv2
+import threading
+
+def bg_music():
+    pygame.mixer.music.load("music/bg.mp3")
+    pygame.mixer.music.play();
+    
+musicThread = threading.Thread(target=bg_music)
 
 
 
-pygame.display.set_caption('RT Boxer')
+
+
+pygame.display.set_caption('Cam Boxer')
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
@@ -35,6 +44,8 @@ class Player:
          
         
 character1 = Player("Hassan", cord_x=800,cord_y=200, health=100)
+
+
 character2 = Player("Soham", cord_x=300,cord_y=200,health=100)
 # print(character1.cord_x)    
         
@@ -75,13 +86,13 @@ def load_image():
     }
     return image_dictionary
     
-    
-    
+
+
 def init_func():
     pygame.init()
     pygame.font.init()
+    musicThread.start();  
     screen = pygame.display.set_mode((1280,720))
-    clock = pygame.time.Clock();
     first_character_punch = False
     second_character_punch = False
     
@@ -106,14 +117,9 @@ def init_func():
         dist = dist**(0.5)
         return dist
 
-    jab = False
-    cross = False
     counter = 0
-    cap = cv2.VideoCapture("char1/test.mp4")
+    cap = cv2.VideoCapture()
 
-    char1_x,char1_y = 1000,200;
-    char2_x,char2_y = 1000,200;
-    # cap = cv2.VideoCapture(0)
 
     # Start the game loop
     cap = cv2.VideoCapture()
@@ -128,7 +134,7 @@ def init_func():
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             
             # process the frame for pose detection
-            pose_results = pose.process(frame_rgb)
+            pose_results = pose.process(frame)
             R_shoul = pose_results.pose_landmarks.landmark[12]
             L_shoul = pose_results.pose_landmarks.landmark[11]
             R_elbow = pose_results.pose_landmarks.landmark[14]
@@ -165,7 +171,7 @@ def init_func():
                     character1.cord_x += 35
 
             # draw skeleton on the frame
-            # mp_drawing.draw_landmarks(frame_rgb, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+            mp_drawing.draw_landmarks(frame_rgb, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
             # display the frame
             cv2.imshow('RealTime', frame_rgb)
             
@@ -234,6 +240,9 @@ def init_func():
         #within for loop   
         screen.blit(img_dictionary["bg"],(0,0))
         if first_character_punch:
+            pygame.mixer.music.load("effects/has-punch.mp3")
+            # pygame.mixer.music.play()
+            pygame.mixer.Channel(1).play(pygame.mixer.Sound("effects/has-punch.mp3"), maxtime=600)
             screen.blit(img_dictionary["character1_punch"], (character1.cord_x,character1.cord_y))
             first_character_punch=False;
             if collision(character2.cord_x,character1.cord_x):
@@ -245,6 +254,8 @@ def init_func():
 
         # second player logic
         if second_character_punch:
+            pygame.mixer.music.load("effects/tan-punch.mp3")
+            pygame.mixer.music.play()
             screen.blit(img_dictionary["character2_punch"], (character2.cord_x-100,character2.cord_y))
             second_character_punch=False;
             if collision(character2.cord_x,character1.cord_x):
