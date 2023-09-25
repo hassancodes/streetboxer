@@ -6,6 +6,10 @@
 - pip install `requirements.txt`
 - **python boxer.py** [make sure to have Python installed , if not follow this link](https://www.python.org/downloads/)
 
+
+## Making Sure
+- make sure to have a `webcam` connected
+
 ## Future for Boxer.py
 - adding socket.io to make it real-time. Where players can connect and play online.
 - improved gesture tracking
@@ -22,8 +26,8 @@
 
 
 #### Contributors
-- Soham Nawthale
 - Muhammad Hassan
+- Soham Nawthale
 - Tanjim Redwan
 - Thaison
 
