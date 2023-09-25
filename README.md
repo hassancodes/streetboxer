@@ -3,7 +3,7 @@
 
 ## How to Install
 - git clone - `https://github.com/hassancodes/streetboxer.git`
-- pip install requirements.txt
+- pip install `requirements.txt`
 - **python boxer.py** [make sure to have Python installed , if not follow this link](https://www.python.org/downloads/)
 
 ## Future for Boxer.py
